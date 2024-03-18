@@ -33,7 +33,7 @@ class ImageSubscriber(Node):
         
         annotated_frame = results[0].plot()
 
-        cv2.imshow("YOLOv8 Detection with bbox", annotated_frame)
+        cv2.imshow("YOLOv8 Detection without bbox", annotated_frame)
         cv2.waitKey(1)
         
         # Publish detection results

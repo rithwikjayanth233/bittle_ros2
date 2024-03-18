@@ -31,6 +31,9 @@ setup(
             'object_detection_driver = bittle_ros2.object_detection_driver:main',
             'image_save_subscriber = bittle_ros2.image_save_subscriber:main',
             'latency_test = bittle_ros2.latency_test:main',
+            'experiment_huddle_1 = bittle_ros2.experiment_huddle_1:main',
+            'experiment_driver = bittle_ros2.experiment_driver:main',
+            'experiment_subscriber = bittle_ros2.experiment_subscriber:main'
         ],
     },
 )
