@@ -273,11 +273,11 @@ class Driver(Node):
             xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
             for i in range(len(xywhn_list)):
                 x, y, w, h, _ = xywhn_list[i]
-                if result_list[i] == 0.0:  # white Pheromone
+                if result_list[i] == 2.0:  # white Pheromone
                     white_pheromones.append((x, y, w, h))
-                elif result_list[i] == 1.0:  # Black Pheromone
+                elif result_list[i] == 0.0:  # Black Pheromone
                     black_pheromones.append((x, y, w, h))
-                elif result_list[i] == 2.0:  # Acorn
+                elif result_list[i] == 1.0:  # Acorn
                     acorns.append((x, y, w, h))
 
         
