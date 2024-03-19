@@ -263,15 +263,15 @@ class Driver(Node):
 
         #looping through detected objects
         if len(results) > 0:
-            result_list = (results[0].boxes.cls).cpu().tolist()
-            xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
+            # result_list = (results[0].boxes.cls).cpu().tolist()
+            # xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
             for i in range(len(xywhn_list)):
                 x, y, w, h, _ = xywhn_list[i]
-                if result_list[i] == 2.0:  # white Pheromone
+                if results[i] == 2.0:  # white Pheromone
                     white_pheromones.append((x, y, w, h))
-                elif result_list[i] == 0.0:  # Black Pheromone
+                elif results[i] == 0.0:  # Black Pheromone
                     black_pheromones.append((x, y, w, h))
-                elif result_list[i] == 1.0:  # Acorn
+                elif results[i] == 1.0:  # Acorn
                     acorns.append((x, y, w, h))
                     self.dir=1
 
