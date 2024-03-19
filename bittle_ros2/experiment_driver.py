@@ -224,12 +224,6 @@ from rclpy.node import Node
 import serial
 import struct
 import time
-
-from sensor_msgs.msg import CompressedImage
-from cv_bridge import CvBridge, CvBridgeError
-import cv2
-import os
-from ultralytics import YOLO
 import numpy as np
 import serial
 from bittle_msgs.msg import Detection
