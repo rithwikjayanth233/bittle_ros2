@@ -263,21 +263,20 @@ class Driver(Node):
         white_pheromones = [] #Happy State
         black_pheromones = [] #Search State
 
-        #looping through detected objects
+        # Loop through detected objects
         if len(results) > 0 and len(xywhn_list) > 0:
-        #     # result_list = (results[0].boxes.cls).cpu().tolist()
-        #     # xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
-            for i in range(len(xywhn_list)):
-                x, y, w, h = xywhn_list[i * 4:i * 4 + 4]
+            for result, xywh in zip(results, [xywhn_list[i:i + 4] for i in range(0, len(xywhn_list), 4)]):
+                # Extract x, y, w, h values for the current object
+                x, y, w, h = xywh
 
-
-                if results[0] == 2:  # white Pheromone
-                    white_pheromones.append((x, y, w, h))
-                elif results[0] == 0:  # Black Pheromone
-                    black_pheromones.append((x, y, w, h))
-                elif results[0] == 1:  # Acorn
+                # Check the class of the current object and append it to the appropriate list
+                if result == 1:  # Acorn
                     acorns.append((x, y, w, h))
-                    self.dir=1
+                    self.dir = 1  # Set direction to move towards the acorn
+                elif result == 2:  # White Pheromone
+                    white_pheromones.append((x, y, w, h))
+                elif result == 0:  # Black Pheromone
+                    black_pheromones.append((x, y, w, h))
 
         
         # calculate what actions need to be taken
