@@ -271,11 +271,11 @@ class Driver(Node):
         x, y, w, h, = xywhn_list[0], xywhn_list[1], xywhn_list[2], xywhn_list[3]
 
 
-        if results[1] == 2:  # white Pheromone
+        if results[0] == 2:  # white Pheromone
             white_pheromones.append((x, y, w, h))
-        elif results[1] == 0:  # Black Pheromone
+        elif results[0] == 0:  # Black Pheromone
             black_pheromones.append((x, y, w, h))
-        elif results[1] == 1:  # Acorn
+        elif results[0] == 1:  # Acorn
             acorns.append((x, y, w, h))
             self.dir=1
 
