@@ -252,6 +252,7 @@ class Driver(Node):
 
     def callback(self, msg: Detection):
         self.get_logger().info("Received a /detection_topic message!")
+        direction = 0 
 
         results = msg.results
         xywhn_list = msg.xywhn_list
@@ -260,7 +261,7 @@ class Driver(Node):
         # print("-----")
         #Initialize lists
         acorns = [] #Found Acorns
-        white_pheromones = [] #Happy State
+        white_pheromones = [] #Happy State  
         black_pheromones = [] #Search State
 
         # Loop through detected objects
@@ -272,13 +273,15 @@ class Driver(Node):
                 # Check the class of the current object and append it to the appropriate list
                 if result == 1:  # Acorn
                     acorns.append((x, y, w, h))
-                    self.dir = 1  # Set direction to move towards the acorn
+                    direction = 1  # Set direction to move towards the acorn
                 elif result == 2:  # White Pheromone
                     white_pheromones.append((x, y, w, h))
                 elif result == 0:  # Black Pheromone
                     black_pheromones.append((x, y, w, h))
 
-        
+        if self.dir != direction:
+            self.wrapper([dir_dict[direction], 0])
+            self.dir = direction
         # calculate what actions need to be taken
 
         #first lets have it rotate and move to the pheromone
