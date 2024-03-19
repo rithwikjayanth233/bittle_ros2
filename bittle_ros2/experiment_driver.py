@@ -264,20 +264,20 @@ class Driver(Node):
         black_pheromones = [] #Search State
 
         #looping through detected objects
-        # if len(results) > 0:
+        if len(results) > 0:
         #     # result_list = (results[0].boxes.cls).cpu().tolist()
         #     # xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
-        #     for i in range(len(xywhn_list)):
-        x, y, w, h, = xywhn_list[0], xywhn_list[1], xywhn_list[2], xywhn_list[3]
+            for i in range(len(xywhn_list)):
+                x, y, w, h = xywhn_list[i * 4:i * 4 + 4]
 
 
-        if results[0] == 2:  # white Pheromone
-            white_pheromones.append((x, y, w, h))
-        elif results[0] == 0:  # Black Pheromone
-            black_pheromones.append((x, y, w, h))
-        elif results[0] == 1:  # Acorn
-            acorns.append((x, y, w, h))
-            self.dir=1
+                if results[0] == 2:  # white Pheromone
+                    white_pheromones.append((x, y, w, h))
+                elif results[0] == 0:  # Black Pheromone
+                    black_pheromones.append((x, y, w, h))
+                elif results[0] == 1:  # Acorn
+                    acorns.append((x, y, w, h))
+                    self.dir=1
 
         
         # calculate what actions need to be taken
