@@ -279,14 +279,13 @@ class Driver(Node):
                     black_pheromones.append((x, y, w, h))
                 elif result_list[i] == 1.0:  # Acorn
                     acorns.append((x, y, w, h))
+                    self.dir=1
 
         
         # calculate what actions need to be taken
 
         #first lets have it rotate and move to the pheromone
                     
-        if acorns:
-            self.dir = 1
     
     def wrapper(self, task):  # Structure is [token, var=[], time]
         print(task)
