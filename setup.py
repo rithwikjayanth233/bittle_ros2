@@ -33,7 +33,8 @@ setup(
             'latency_test = bittle_ros2.latency_test:main',
             'experiment_huddle_1 = bittle_ros2.experiment_huddle_1:main',
             'experiment_driver = bittle_ros2.experiment_driver:main',
-            'experiment_subscriber = bittle_ros2.experiment_subscriber:main'
+            'experiment_subscriber = bittle_ros2.experiment_subscriber:main',
+            'robot_experiment_subscriber = bittle_ros2.robot_experiment_subscriber:main'
         ],
     },
 )
