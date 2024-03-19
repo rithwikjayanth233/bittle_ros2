@@ -268,7 +268,7 @@ class Driver(Node):
             # result_list = (results[0].boxes.cls).cpu().tolist()
             # xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
             for i in range(len(xywhn_list)):
-                x, y, w, h, = xywhn_list[i][:4]
+                x, y, w, h, = xywhn_list[i][1:]
 
 
                 if results[i] == 2.0:  # white Pheromone
