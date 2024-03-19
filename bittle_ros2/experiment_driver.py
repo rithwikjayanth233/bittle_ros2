@@ -264,7 +264,7 @@ class Driver(Node):
         black_pheromones = [] #Search State
 
         #looping through detected objects
-        if len(results) > 0:
+        if len(results) > 0 and len(xywhn_list) > 0:
         #     # result_list = (results[0].boxes.cls).cpu().tolist()
         #     # xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
             for i in range(len(xywhn_list)):
