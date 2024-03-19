@@ -255,9 +255,9 @@ class Driver(Node):
 
         results = msg.results
         xywhn_list = msg.xywhn_list
-        print("results")
-        print(xywhn_list)
-        print("-----")
+        # print("results")
+        # print(xywhn_list)
+        # print("-----")
         #Initialize lists
         acorns = [] #Found Acorns
         white_pheromones = [] #Happy State
