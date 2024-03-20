@@ -3,12 +3,6 @@ from rclpy.node import Node
 import serial
 import struct
 import time
-
-from sensor_msgs.msg import CompressedImage
-from cv_bridge import CvBridge, CvBridgeError
-import cv2
-import os
-from ultralytics import YOLO
 import numpy as np
 import serial
 from bittle_msgs.msg import Detection
@@ -37,35 +31,40 @@ class Driver(Node):
 
     def callback(self, msg: Detection):
         self.get_logger().info("Received a /detection_topic message!")
+        direction = 0 
 
         results = msg.results
         xywhn_list = msg.xywhn_list
-        
+        # print("results")
+        # print(xywhn_list)
+        # print("-----")
         #Initialize lists
         acorns = [] #Found Acorns
-        white_pheromones = [] #Happy State
+        white_pheromones = [] #Happy State  
         black_pheromones = [] #Search State
 
-        #looping through detected objects
-        if len(results) > 0:
-            result_list = (results[0].boxes.cls).cpu().tolist()
-            xywhn_list = (results[0].boxes.xywhn).cpu().tolist()
-            for i in range(len(xywhn_list)):
-                x, y, w, h, _ = xywhn_list[i]
-                if result_list[i] == 0.0:  # white Pheromone
-                    white_pheromones.append((x, y, w, h))
-                elif result_list[i] == 1.0:  # Black Pheromone
-                    black_pheromones.append((x, y, w, h))
-                elif result_list[i] == 2.0:  # Acorn
-                    acorns.append((x, y, w, h))
+        # Loop through detected objects
+        if len(results) > 0 and len(xywhn_list) > 0:
+            for result, xywh in zip(results, [xywhn_list[i:i + 4] for i in range(0, len(xywhn_list), 4)]):
+                # Extract x, y, w, h values for the current object
+                x, y, w, h = xywh
 
-        
+                # Check the class of the current object and append it to the appropriate list
+                if result == 1:  # Acorn
+                    acorns.append((x, y, w, h))
+                    direction = 1  # Set direction to move towards the acorn
+                elif result == 2:  # White Pheromone
+                    white_pheromones.append((x, y, w, h))
+                elif result == 0:  # Black Pheromone
+                    black_pheromones.append((x, y, w, h))
+
+        if self.dir != direction:
+            self.wrapper([dir_dict[direction], 0])
+            self.dir = direction
         # calculate what actions need to be taken
 
         #first lets have it rotate and move to the pheromone
                     
-        if acorns:
-            self.dir = 1
     
     def wrapper(self, task):  # Structure is [token, var=[], time]
         print(task)
