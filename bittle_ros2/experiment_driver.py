@@ -45,6 +45,8 @@ class Driver(Node):
         white_pheromones = [] #Happy State
         black_pheromones = [] #Search State
         directions = [] #Stores direction motion commands
+        x_distance = 0.5
+        y_distance = 0.5
 
         # Loop through detected objects
         if len(results) > 0 and len(xywhn_list) > 0:
@@ -79,7 +81,7 @@ class Driver(Node):
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
-            direction = self.move_to_item()
+            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
@@ -91,7 +93,7 @@ class Driver(Node):
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
-            direction = self.move_to_item()
+            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
@@ -103,7 +105,7 @@ class Driver(Node):
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
-            direction = self.move_to_item()
+            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
