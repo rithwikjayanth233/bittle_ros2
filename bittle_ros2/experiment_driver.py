@@ -128,7 +128,7 @@ class Driver(Node):
                 direction = 3
 
             elif angle < -0.1: #turn left
-                direction = 4 
+                direction = 2 
 
         return direction
     
