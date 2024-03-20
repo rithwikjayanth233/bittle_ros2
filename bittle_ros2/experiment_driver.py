@@ -112,7 +112,7 @@ class Driver(Node):
             directions.append(direction)
         
         elif not black_pheromones and not white_pheromones and not acorns:
-            direction = self.rotate_bittle(self)
+            direction = self.rotate_bittle()
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
                 self.dir = direction
