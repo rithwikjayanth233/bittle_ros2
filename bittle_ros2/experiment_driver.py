@@ -18,6 +18,7 @@ class Driver(Node):
 
     def __init__(self, port='/dev/ttyAMA0'):
         super().__init__('cmd_vel_listener')
+        self.dir = 0
         self.subscription = self.create_subscription(
             Detection,
             '/detection_topic',
