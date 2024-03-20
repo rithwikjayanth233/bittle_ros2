@@ -50,7 +50,8 @@ class Driver(Node):
             for result, xywh in zip(results, [xywhn_list[i:i + 4] for i in range(0, len(xywhn_list), 4)]):
                 # Extract x, y, w, h values for the current object
                 x, y, w, h = xywh
-
+                x_distance = 0.5 - x
+                y_distance = 0.5 - y
                 # Check the class of the current object and append it to the appropriate list
                 if result == 1:  # Acorn
                     acorns.append((x, y, w, h))
@@ -62,8 +63,6 @@ class Driver(Node):
 
         ################THIS IS THE CALCULATION PART################
                 
-        x_distance = 0.5 - x
-        y_distance = 0.5 - y
 
         x_boundary_left = 0.5 - 0.1
         x_boundary_right = 0.5 + 0.1
