@@ -71,28 +71,10 @@ class Driver(Node):
         angle = np.arctan(y_distance/x_distance)
 
 
-        # Move towards detected pheromones
-        # if acorns:
-        #     self.move_to_pheromones(acorns[0])
-        # elif white_pheromones and not acorns:
-        #     self.move_to_pheromones(white_pheromones[0])
-        # elif black_pheromones and not white_pheromones and not acorns:
-        #     self.move_to_pheromones(black_pheromones[0])
-        # elif not black_pheromones and not white_pheromones and not acorns:
-        #     self.rotate_bittle()
-
-        
-
-        # if self.dir != direction:
-        #     self.wrapper([dir_dict[direction], 0])
-        #     self.dir = direction
-
-    
-
         ################THIS IS THE CALCULATION PART################
 
         if acorns:
-            direction = self.rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right)
+            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
@@ -104,7 +86,7 @@ class Driver(Node):
                 self.dir = direction
         
         elif white_pheromones and not acorns:
-            direction = self.rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right)
+            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
@@ -116,7 +98,7 @@ class Driver(Node):
             directions.append(direction)
 
         elif black_pheromones and not white_pheromones and not acorns:
-            direction = self.rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right)
+            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
@@ -137,7 +119,7 @@ class Driver(Node):
         
 
     ##### USER DEFINED FUNCTIONS######    
-    def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
+    def rotate_to_item(x, angle, x_boundary_left, x_boundary_right):
         if x < x_boundary_left or x > x_boundary_right:
             if angle > 0.1: #turn right
                 direction = 3
