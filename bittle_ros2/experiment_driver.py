@@ -86,7 +86,7 @@ class Driver(Node):
                 self.dir = direction
         
         elif white_pheromones and not acorns:
-            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
+            direction = self.rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
@@ -98,7 +98,7 @@ class Driver(Node):
             directions.append(direction)
 
         elif black_pheromones and not white_pheromones and not acorns:
-            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
+            direction = self.rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right)
             directions.append(direction)
             if self.dir != direction:
                 self.wrapper([dir_dict[direction], 0])
