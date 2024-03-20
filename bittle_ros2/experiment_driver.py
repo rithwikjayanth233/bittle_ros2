@@ -119,7 +119,7 @@ class Driver(Node):
         
 
     ##### USER DEFINED FUNCTIONS######    
-    def rotate_to_item(x, angle, x_boundary_left, x_boundary_right):
+    def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
         if x < x_boundary_left or x > x_boundary_right:
             if angle > 0.1: #turn right
                 direction = 3
@@ -129,7 +129,7 @@ class Driver(Node):
 
         return direction
     
-    def move_to_item(x, x_boundary_left, x_boundary_right):
+    def move_to_item(self, x, x_boundary_left, x_boundary_right):
         if x >= x_boundary_left or x <= x_boundary_right:
             direction = 1
         
