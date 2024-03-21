@@ -79,6 +79,7 @@ class Driver(Node):
         direction = self.calculate_direction(acorns, white_pheromones, black_pheromones)
 
         #######ACTION PART######
+        # for direction in directions:
         if self.dir != direction:
             self.wrapper([dir_dict[direction], 0])
             self.dir = direction
@@ -100,42 +101,59 @@ class Driver(Node):
             direction = self.rotate_bittle()
 
         return direction
-
+    
     def rotate_to_acorn(self, acorn):
-        x_acorn, y_acorn, _, _ = acorn
-
-        # Calculate the distance and angle to the acorn
-        x_distance = 0.5 - x_acorn
-        y_distance = 0.5 - y_acorn
-        angle = np.arctan2(y_distance, x_distance)
-
-        # Determine the direction based on the angle
-        if angle > 0.1:  # turn right
-            direction = 3
-        elif angle < -0.1:  # turn left
-            direction = 2
+        x,y,_,_ = acorn
+        if len(acorn) > 0:
+            if x > 0.75:
+                direction = 3
+            elif x < 0.25:
+                direction = 2
+            else:
+                direction = 1
         else:
-            direction = 0  # do not rotate
+            direction = 0
 
         return direction
+    # def rotate_to_acorn(self, acorn):
+    #     x_acorn, y_acorn, _, _ = acorn
+
+    #     # Calculate the distance and angle to the acorn
+    #     x_distance = 0.5 - x_acorn
+    #     y_distance = 0.5 - y_acorn
+    #     angle = np.arctan2(y_distance, x_distance)
+
+    #     # Determine the direction based on the angle
+    #     if angle > 0.1:  # turn right
+    #         print("turning right to acorn")
+    #         direction = 3
+    #     elif angle < -0.1:  # turn left
+    #         print("turning left to acorn")
+    #         direction = 2
+    #     else:
+    #         direction = 0  # do not rotate
+
+    #     return direction
         
-    def rotate_to_pheromone(self, pheromone):
-        x_pheromone, y_pheromone, _, _ = pheromone
+    # def rotate_to_pheromone(self, pheromone):
+    #     x_pheromone, y_pheromone, _, _ = pheromone
 
-        # Calculate the distance and angle to the pheromone
-        x_distance = 0.5 - x_pheromone
-        y_distance = 0.5 - y_pheromone
-        angle = np.arctan2(y_distance, x_distance)
+    #     # Calculate the distance and angle to the pheromone
+    #     x_distance = 0.5 - x_pheromone
+    #     y_distance = 0.5 - y_pheromone
+    #     angle = np.arctan2(y_distance, x_distance)
 
-        # Determine the direction based on the angle
-        if angle > 0.1:  # turn right
-            direction = 3
-        elif angle < -0.1:  # turn left
-            direction = 2
-        else:
-            direction = 0  # do not rotate
+    #     # Determine the direction based on the angle
+    #     if angle > 0.1:  # turn right
+    #         print("turning right to pheromone")
+    #         direction = 3
+    #     elif angle < -0.1:  # turn left
+    #         print("turning right to pheromone")
+    #         direction = 2
+    #     else:
+    #         direction = 0  # do not rotate
 
-        return direction
+    #     return direction    
 
     def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
         direction = 0
@@ -150,7 +168,10 @@ class Driver(Node):
     
     def move_to_item(self, x, x_boundary_left, x_boundary_right):
         if x >= x_boundary_left or x <= x_boundary_right:
+            print("moving to iem")
             direction = 1
+        else:
+            direction = 0
         
         return direction
 
@@ -185,8 +206,6 @@ class Driver(Node):
         if x_pheromone >= self.x_boundary_left or x_pheromone <= self.x_boundary_right:
             direction = 1
             
-    
-       
 
     def rotate_bittle(self):
         direction = 2
