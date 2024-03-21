@@ -189,7 +189,7 @@ class Driver(Node):
     
     def move_to_item(self, x, x_boundary_left, x_boundary_right):
         if x >= x_boundary_left or x <= x_boundary_right:
-            print("moving to iem")
+            print("moving to item")
             direction = 1
         else:
             direction = 0
