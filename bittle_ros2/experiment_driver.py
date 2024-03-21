@@ -6,8 +6,6 @@ import time
 
 from sensor_msgs.msg import CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
-import cv2
-import os
 import numpy as np
 import serial
 from bittle_msgs.msg import Detection
@@ -56,17 +54,16 @@ class Driver(Node):
                 x_distance = 0.5 - x
                 y_distance = 0.5 - y
                 # Check the class of the current object and append it to the appropriate list
-                if result == 1:  # Acorn
+                if result == 0:  # Acorn
                     acorns.append((x, y, w, h))
                     # direction = 1  # Set direction to move towards the acorn
                 elif result == 2:  # White Pheromone
                     white_pheromones.append((x, y, w, h))
-                elif result == 0:  # Black Pheromone
+                elif result == 1:  # Black Pheromone
                     black_pheromones.append((x, y, w, h))
 
         ################THIS IS THE CALCULATION PART################
                 
-
         x_boundary_left = 0.5 - 0.1
         x_boundary_right = 0.5 + 0.1
 
@@ -80,12 +77,11 @@ class Driver(Node):
 
         #######ACTION PART######
         # for direction in directions:
+        print(direction)
         if self.dir != direction:
             self.wrapper([dir_dict[direction], 0])
             self.dir = direction
             
-
-        
 
     ##### USER DEFINED FUNCTIONS######    
     def calculate_direction(self, acorns, white_pheromones, black_pheromones):
@@ -93,6 +89,8 @@ class Driver(Node):
         # For example:
         if acorns:
             direction = self.rotate_to_acorn(acorns[0])
+            print("acrons[0]")
+            print(acorns[0])
         elif white_pheromones:
             direction = self.rotate_to_pheromone(white_pheromones[0])
         elif black_pheromones:
