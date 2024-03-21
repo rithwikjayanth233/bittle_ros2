@@ -75,51 +75,68 @@ class Driver(Node):
 
         ################THIS IS THE CALCULATION PART################
 
-        if acorns:
-            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
-            directions.append(direction)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-        
-        elif white_pheromones and not acorns:
-            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
-            # directions.append(direction)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-            directions.append(direction)
+        # Calculate direction based on detected objects
+        direction = self.calculate_direction(acorns, white_pheromones, black_pheromones)
 
-        elif black_pheromones and not white_pheromones and not acorns:
-            direction = self.rotate_to_item(x, angle, x_boundary_left, x_boundary_right)
-            directions.append(direction)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-            direction = self.move_to_item(x, x_boundary_left, x_boundary_right)
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
-            directions.append(direction)
-        
-        elif not black_pheromones and not white_pheromones and not acorns:
-            direction = self.rotate_bittle()
-            if self.dir != direction:
-                self.wrapper([dir_dict[direction], 0])
-                self.dir = direction
+        #######ACTION PART######
+        if self.dir != direction:
+            self.wrapper([dir_dict[direction], 0])
+            self.dir = direction
             
 
         
 
     ##### USER DEFINED FUNCTIONS######    
+    def calculate_direction(self, acorns, white_pheromones, black_pheromones):
+        # Implement your logic to calculate direction based on detected objects
+        # For example:
+        if acorns:
+            direction = self.rotate_to_acorn(acorns[0])
+        elif white_pheromones:
+            direction = self.rotate_to_pheromone(white_pheromones[0])
+        elif black_pheromones:
+            direction = self.rotate_to_pheromone(black_pheromones[0])
+        else:
+            direction = self.rotate_bittle()
+
+        return direction
+
+    def rotate_to_acorn(self, acorn):
+        x_acorn, y_acorn, _, _ = acorn
+
+        # Calculate the distance and angle to the acorn
+        x_distance = 0.5 - x_acorn
+        y_distance = 0.5 - y_acorn
+        angle = np.arctan2(y_distance, x_distance)
+
+        # Determine the direction based on the angle
+        if angle > 0.1:  # turn right
+            direction = 3
+        elif angle < -0.1:  # turn left
+            direction = 2
+        else:
+            direction = 0  # do not rotate
+
+        return direction
+        
+    def rotate_to_pheromone(self, pheromone):
+        x_pheromone, y_pheromone, _, _ = pheromone
+
+        # Calculate the distance and angle to the pheromone
+        x_distance = 0.5 - x_pheromone
+        y_distance = 0.5 - y_pheromone
+        angle = np.arctan2(y_distance, x_distance)
+
+        # Determine the direction based on the angle
+        if angle > 0.1:  # turn right
+            direction = 3
+        elif angle < -0.1:  # turn left
+            direction = 2
+        else:
+            direction = 0  # do not rotate
+
+        return direction
+
     def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
         direction = 0
         if x < x_boundary_left or x > x_boundary_right:
