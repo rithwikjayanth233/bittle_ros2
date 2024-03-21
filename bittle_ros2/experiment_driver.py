@@ -104,7 +104,7 @@ class Driver(Node):
     
     def rotate_to_acorn(self, acorn):
         x,y,_,_ = acorn
-        
+        direction = 0
         # if len(acorn) > 0:
         if x > 0.75:
             print("rotating to acorn")
@@ -122,6 +122,7 @@ class Driver(Node):
     
     def rotate_to_pheromone(self, pheromone):
         x,y,_,_ = pheromone
+        direction = 0
         # if len(pheromone) > 0:
         if x > 0.75:
             print("rotating to pheromone")
