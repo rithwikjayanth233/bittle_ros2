@@ -56,8 +56,6 @@ class Driver(Node):
         white_pheromones = [] #Happy State
         black_pheromones = [] #Search State
         directions = [] #Stores direction motion commands
-        x_distance = 0.5
-        y_distance = 0.5
 
         # Loop through detected objects
         if len(results) > 0 and len(xywhn_list) > 0:
