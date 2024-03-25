@@ -119,7 +119,7 @@ class Driver(Node):
                 # print("rotating to acorn")
                 direction = 2
             else:
-                if y > 0.2:
+                if y > 0.3:
                     # print("moving to acorn")
                     direction = 1
                 else:
