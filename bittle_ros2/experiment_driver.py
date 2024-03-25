@@ -17,6 +17,10 @@ class Driver(Node):
     def __init__(self, port='/dev/ttyAMA0'):
         super().__init__('cmd_vel_listener')
         self.dir = 0
+        ###NEW CODE###
+        self.skip_count = 20
+        self.message_count = 0
+        ###END OF NEW CODE###
         self.subscription = self.create_subscription(
             Detection,
             '/detection_topic',
@@ -33,6 +37,13 @@ class Driver(Node):
         )
 
     def callback(self, msg: Detection):
+
+        ###NEW CODE###
+        self.message_count += 1
+        if self.message_count % self.skip_count != 0:
+            return
+        ###END OF NEW CODE###
+
         self.get_logger().info("Received a /detection_topic message!")
         direction = 0
         results = msg.results
@@ -63,14 +74,6 @@ class Driver(Node):
                     black_pheromones.append((x, y, w, h))
 
         ################THIS IS THE CALCULATION PART################
-                
-        x_boundary_left = 0.5 - 0.1
-        x_boundary_right = 0.5 + 0.1
-
-        angle = np.arctan(y_distance/x_distance)
-
-
-        ################THIS IS THE CALCULATION PART################
 
         # Calculate direction based on detected objects
         direction = self.calculate_direction(acorns, white_pheromones, black_pheromones)
@@ -92,47 +95,58 @@ class Driver(Node):
             print("acrons[0]")
             print(acorns[0])
         elif white_pheromones:
+            print('white_pheromones[0]')
+            print(white_pheromones[0])
             direction = self.rotate_to_pheromone(white_pheromones[0])
         elif black_pheromones:
+            print('black_pheromones[0]')
+            print(black_pheromones[0])
             direction = self.rotate_to_pheromone(black_pheromones[0])
         else:
-            direction = self.rotate_bittle()
+            # direction = self.rotate_bittle()
+            direction = 0
 
         return direction
     
     def rotate_to_acorn(self, acorn):
         x,y,_,_ = acorn
         direction = 0
-        # if len(acorn) > 0:
-        if x > 0.75:
-            print("rotating to acorn")
-            direction = 3
-        elif x < 0.25:
-            print("rotating to acorn")
-            direction = 2
+        if len(acorn) > 0:
+            if x > 0.75:
+                print("rotating to acorn")
+                direction = 3
+            elif x < 0.25:
+                print("rotating to acorn")
+                direction = 2
+            else:
+                if y > 0.2:
+                    print("moving to acorn")
+                    direction = 1
+                else:
+                    direction = 0
         else:
-            print("moving to acorn")
-            direction = 1
-        # else:
-        #     direction = 0
+            direction = 0
 
         return direction
     
     def rotate_to_pheromone(self, pheromone):
         x,y,_,_ = pheromone
         direction = 0
-        # if len(pheromone) > 0:
-        if x > 0.75:
-            print("rotating to pheromone")
-            direction = 3
-        elif x < 0.25:
-            print("rotating to pheromone")
-            direction = 2
+        if len(pheromone) > 0:
+            if x > 0.75:
+                print("rotating to pheromone")
+                direction = 3
+            elif x < 0.25:
+                print("rotating to pheromone")
+                direction = 2
+            else:
+                if y > 0.2:
+                    print("moving to pheromone")
+                    direction = 1
+                else:
+                    direction = 0   
         else:
-            print("moving to pheromone")
-            direction = 1
-        # else:
-        #     direction = 0
+            direction = 0
 
         return direction
 
@@ -229,7 +243,8 @@ class Driver(Node):
             
 
     def rotate_bittle(self):
-        direction = 2
+        print("cannot detect any item")
+        direction = 0
         return direction
 
 
