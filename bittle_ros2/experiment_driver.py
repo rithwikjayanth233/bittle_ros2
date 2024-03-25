@@ -4,6 +4,8 @@ import serial
 import struct
 import time
 
+import random
+
 from sensor_msgs.msg import CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
@@ -104,7 +106,8 @@ class Driver(Node):
             direction = self.rotate_to_pheromone(black_pheromones[0])
         else:
             # direction = self.rotate_bittle()
-            direction = 3
+            direction = random.randint(1, 3)
+            print("cant find anything. direction =", direction)
 
         return direction
     
