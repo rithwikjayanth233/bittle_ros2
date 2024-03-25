@@ -18,7 +18,7 @@ class Driver(Node):
         super().__init__('cmd_vel_listener')
         self.dir = 0
         ###NEW CODE###
-        self.skip_count = 20
+        self.skip_count = 5
         self.message_count = 0
         ###END OF NEW CODE###
         self.subscription = self.create_subscription(
@@ -90,6 +90,7 @@ class Driver(Node):
     def calculate_direction(self, acorns, white_pheromones, black_pheromones):
         # Implement your logic to calculate direction based on detected objects
         # For example:
+        direction = 0
         if acorns:
             direction = self.rotate_to_acorn(acorns[0])
             print("acrons[0]")
