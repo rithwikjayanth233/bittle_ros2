@@ -113,14 +113,14 @@ class Driver(Node):
         # direction = 0
         if len(acorn) > 0:
             if x > 0.75:
-                print("rotating to acorn")
+                # print("rotating to acorn")
                 direction = 3
             elif x < 0.25:
-                print("rotating to acorn")
+                # print("rotating to acorn")
                 direction = 2
             else:
                 if y > 0.2:
-                    print("moving to acorn")
+                    # print("moving to acorn")
                     direction = 1
                 else:
                     direction = 0
@@ -134,14 +134,14 @@ class Driver(Node):
         # direction = 0
         if len(pheromone) > 0:
             if x > 0.75:
-                print("rotating to pheromone")
+                # print("rotating to pheromone")
                 direction = 3
             elif x < 0.25:
-                print("rotating to pheromone")
+                # print("rotating to pheromone")
                 direction = 2
             else:
                 if y > 0.2:
-                    print("moving to pheromone")
+                    # print("moving to pheromone")
                     direction = 1
                 else:
                     direction = 0   
