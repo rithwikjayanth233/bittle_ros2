@@ -90,28 +90,27 @@ class Driver(Node):
     def calculate_direction(self, acorns, white_pheromones, black_pheromones):
         # Implement your logic to calculate direction based on detected objects
         # For example:
-        direction = 0
         if acorns:
             direction = self.rotate_to_acorn(acorns[0])
-            print("acrons[0]")
-            print(acorns[0])
+            # print("acrons[0]")
+            # print(acorns[0])
         elif white_pheromones:
-            print('white_pheromones[0]')
-            print(white_pheromones[0])
+            # print('white_pheromones[0]')
+            # print(white_pheromones[0])
             direction = self.rotate_to_pheromone(white_pheromones[0])
         elif black_pheromones:
-            print('black_pheromones[0]')
-            print(black_pheromones[0])
+            # print('black_pheromones[0]')
+            # print(black_pheromones[0])
             direction = self.rotate_to_pheromone(black_pheromones[0])
         else:
             # direction = self.rotate_bittle()
-            direction = 0
+            direction = 2
 
         return direction
     
     def rotate_to_acorn(self, acorn):
         x,y,_,_ = acorn
-        direction = 0
+        # direction = 0
         if len(acorn) > 0:
             if x > 0.75:
                 print("rotating to acorn")
@@ -132,7 +131,7 @@ class Driver(Node):
     
     def rotate_to_pheromone(self, pheromone):
         x,y,_,_ = pheromone
-        direction = 0
+        # direction = 0
         if len(pheromone) > 0:
             if x > 0.75:
                 print("rotating to pheromone")
