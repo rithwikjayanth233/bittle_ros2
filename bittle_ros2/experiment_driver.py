@@ -81,8 +81,6 @@ class Driver(Node):
         direction = self.calculate_direction(acorns, white_pheromones, black_pheromones)
 
         #######ACTION PART######
-        # for direction in directions:
-        print(direction)
         if self.dir != direction:
             self.wrapper([dir_dict[direction], 0])
             self.dir = direction
@@ -167,46 +165,7 @@ class Driver(Node):
             direction = 0
 
         return direction
-
-    # def rotate_to_acorn(self, acorn):
-    #     x_acorn, y_acorn, _, _ = acorn
-
-    #     # Calculate the distance and angle to the acorn
-    #     x_distance = 0.5 - x_acorn
-    #     y_distance = 0.5 - y_acorn
-    #     angle = np.arctan2(y_distance, x_distance)
-
-    #     # Determine the direction based on the angle
-    #     if angle > 0.1:  # turn right
-    #         print("turning right to acorn")
-    #         direction = 3
-    #     elif angle < -0.1:  # turn left
-    #         print("turning left to acorn")
-    #         direction = 2
-    #     else:
-    #         direction = 0  # do not rotate
-
-    #     return direction
-        
-    # def rotate_to_pheromone(self, pheromone):
-    #     x_pheromone, y_pheromone, _, _ = pheromone
-
-    #     # Calculate the distance and angle to the pheromone
-    #     x_distance = 0.5 - x_pheromone
-    #     y_distance = 0.5 - y_pheromone
-    #     angle = np.arctan2(y_distance, x_distance)
-
-    #     # Determine the direction based on the angle
-    #     if angle > 0.1:  # turn right
-    #         print("turning right to pheromone")
-    #         direction = 3
-    #     elif angle < -0.1:  # turn left
-    #         print("turning right to pheromone")
-    #         direction = 2
-    #     else:
-    #         direction = 0  # do not rotate
-
-    #     return direction    
+    
 
     def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
         direction = 0
@@ -321,3 +280,42 @@ if __name__ == '__main__':
     main()
 
 
+    # def rotate_to_acorn(self, acorn):
+    #     x_acorn, y_acorn, _, _ = acorn
+
+    #     # Calculate the distance and angle to the acorn
+    #     x_distance = 0.5 - x_acorn
+    #     y_distance = 0.5 - y_acorn
+    #     angle = np.arctan2(y_distance, x_distance)
+
+    #     # Determine the direction based on the angle
+    #     if angle > 0.1:  # turn right
+    #         print("turning right to acorn")
+    #         direction = 3
+    #     elif angle < -0.1:  # turn left
+    #         print("turning left to acorn")
+    #         direction = 2
+    #     else:
+    #         direction = 0  # do not rotate
+
+    #     return direction
+        
+    # def rotate_to_pheromone(self, pheromone):
+    #     x_pheromone, y_pheromone, _, _ = pheromone
+
+    #     # Calculate the distance and angle to the pheromone
+    #     x_distance = 0.5 - x_pheromone
+    #     y_distance = 0.5 - y_pheromone
+    #     angle = np.arctan2(y_distance, x_distance)
+
+    #     # Determine the direction based on the angle
+    #     if angle > 0.1:  # turn right
+    #         print("turning right to pheromone")
+    #         direction = 3
+    #     elif angle < -0.1:  # turn left
+    #         print("turning right to pheromone")
+    #         direction = 2
+    #     else:
+    #         direction = 0  # do not rotate
+
+    #     return direction
