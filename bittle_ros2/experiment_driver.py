@@ -3,7 +3,7 @@ from rclpy.node import Node
 import serial
 import struct
 import time
-
+import math
 import random
 
 from sensor_msgs.msg import CompressedImage
@@ -88,28 +88,43 @@ class Driver(Node):
             self.dir = direction
             
 
-    ##### USER DEFINED FUNCTIONS######    
+    ##### USER DEFINED FUNCTIONS######  
+
+
     def calculate_direction(self, acorns, white_pheromones, black_pheromones):
-        # Implement your logic to calculate direction based on detected objects
-        # For example:
         if acorns:
             direction = self.rotate_to_acorn(acorns[0])
-            # print("acrons[0]")
-            # print(acorns[0])
+
         elif white_pheromones:
-            # print('white_pheromones[0]')
-            # print(white_pheromones[0])
-            direction = self.rotate_to_pheromone(white_pheromones[0])
+            # direction = self.rotate_to_pheromone(white_pheromones[0])
+            direction = self.find_closest_pheromone(white_pheromones)
+
         elif black_pheromones:
-            # print('black_pheromones[0]')
-            # print(black_pheromones[0])
-            direction = self.rotate_to_pheromone(black_pheromones[0])
+            # direction = self.rotate_to_pheromone(black_pheromones[0])
+            direction = self.find_closest_pheromone(black_pheromones)
+
         else:
-            # direction = self.rotate_bittle()
             direction = random.randint(1, 3)
             print("cant find anything. direction =", direction)
 
         return direction
+
+    def find_closest_pheromone(self, pheromones):
+        closest_distance = math.inf
+        closest_pheromone = None
+
+        for pheromone in pheromones:
+            x, y, _, _ = pheromone
+            distance = math.sqrt((x - 0.5)**2 + (y - 0.5)**2)
+            if distance < closest_distance:
+                closest_distance = distance
+                closest_pheromone = pheromone
+
+        if closest_pheromone:
+            direction = self.rotate_to_pheromone(closest_pheromone)
+            return direction
+        else:
+            return random.randint(1, 3)  # If no pheromone found, choose random direction
     
     def rotate_to_acorn(self, acorn):
         x,y,_,_ = acorn
@@ -250,14 +265,7 @@ class Driver(Node):
         direction = 0
         return direction
 
-
-
-    ####ASK REID OR ABRAHAM ABOUT THIS#####    
-    def queue_commands(self, direction, directions):
-        directions.append(direction)
-
-
-
+    #########################BITTLE COMMANDS############################
     def wrapper(self, task):  # Structure is [token, var=[], time]
         print(task)
         if len(task) == 2:
