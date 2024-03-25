@@ -104,7 +104,7 @@ class Driver(Node):
             direction = self.rotate_to_pheromone(black_pheromones[0])
         else:
             # direction = self.rotate_bittle()
-            direction = 2
+            direction = 3
 
         return direction
     
