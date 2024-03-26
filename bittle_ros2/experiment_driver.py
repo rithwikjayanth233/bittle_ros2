@@ -133,11 +133,11 @@ class Driver(Node):
                 # print("rotating to acorn")
                 direction = 2
             else:
-                if y > 0.3:
-                    # print("moving to acorn")
-                    direction = 1
-                else:
-                    direction = 0
+                # if y > 0.3:
+                #     # print("moving to acorn")
+                direction = 1
+                # else:
+                #     direction = 0
         else:
             direction = 0
 
@@ -154,11 +154,8 @@ class Driver(Node):
                 # print("rotating to pheromone")
                 direction = 2
             else:
-                if y > 0.2:
-                    # print("moving to pheromone")
-                    direction = 1
-                else:
-                    direction = 0   
+                # print("moving to pheromone")
+                direction = 1  
         else:
             direction = 0
 
