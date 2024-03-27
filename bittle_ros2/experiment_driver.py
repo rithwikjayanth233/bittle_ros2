@@ -12,6 +12,8 @@ import numpy as np
 import serial
 from bittle_msgs.msg import Detection
 
+from std_msgs.msg import Int32
+
 dir_dict = {1: 'kcrF', -1: 'kbk', 2: 'kcrL', 3: 'kcrR', 0: 'kbalance'}
 
 class Driver(Node):
@@ -37,6 +39,8 @@ class Driver(Node):
             bytesize=serial.EIGHTBITS,
             timeout=1
         )
+
+        self.direction_publisher = self.create_publisher(Int32, '/direction_commands', 10)
 
     def callback(self, msg: Detection):
 
@@ -81,9 +85,12 @@ class Driver(Node):
             self.wrapper([dir_dict[direction], 0])
             self.dir = direction
             
+        # Publish the direction command
+        direction_msg = Int32()
+        direction_msg.data = direction
+        self.direction_publisher.publish(direction_msg)
 
     ##### USER DEFINED FUNCTIONS######  
-
 
     def calculate_direction(self, acorns, white_pheromones, black_pheromones):
         if acorns:
