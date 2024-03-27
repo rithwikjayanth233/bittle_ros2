@@ -62,8 +62,6 @@ class Driver(Node):
             for result, xywh in zip(results, [xywhn_list[i:i + 4] for i in range(0, len(xywhn_list), 4)]):
                 # Extract x, y, w, h values for the current object
                 x, y, w, h = xywh
-                x_distance = 0.5 - x
-                y_distance = 0.5 - y
                 # Check the class of the current object and append it to the appropriate list
                 if result == 0:  # Acorn
                     acorns.append((x, y, w, h))
@@ -106,21 +104,42 @@ class Driver(Node):
         return direction
 
     def find_closest_pheromone(self, pheromones):
+        # closest_distance = math.inf
+        # closest_pheromone = None
+
+        # for pheromone in pheromones:
+        #     x, y, _, _ = pheromone
+        #     distance = math.sqrt((x - 0.5)**2 + (y - 0.5)**2)
+        #     if distance < closest_distance:
+        #         closest_distance = distance
+        #         closest_pheromone = pheromone
+
+        # if closest_pheromone:
+        #     direction = self.rotate_to_pheromone(closest_pheromone)
+        #     return direction
+        # else:
+        #     return random.randint(1, 3)  # If no pheromone found, choose random direction
+
         closest_distance = math.inf
         closest_pheromone = None
 
+        # Define the coordinates of the confidence region
+        confidence_region = [[0.25, 1], [0.25, 0.5], [0, 0.3], [0.75, 1], [0.75, 0.5], [1, 0.3]]
+
         for pheromone in pheromones:
             x, y, _, _ = pheromone
-            distance = math.sqrt((x - 0.5)**2 + (y - 0.5)**2)
-            if distance < closest_distance:
-                closest_distance = distance
-                closest_pheromone = pheromone
+            # Check if the pheromone is within the confidence region
+            if [x, y] in confidence_region:
+                distance = math.sqrt((x - 0.5)**2 + (y - 0.5)**2)
+                if distance < closest_distance:
+                    closest_distance = distance
+                    closest_pheromone = pheromone
 
         if closest_pheromone:
             direction = self.rotate_to_pheromone(closest_pheromone)
             return direction
         else:
-            return random.randint(1, 3)  # If no pheromone found, choose random direction
+            return random.randint(1, 3)  # If no pheromone found in the confidence region, choose random direction
     
     def rotate_to_acorn(self, acorn):
         x,y,_,_ = acorn
@@ -161,17 +180,6 @@ class Driver(Node):
 
         return direction
     
-
-    # def rotate_to_item(self, x, angle, x_boundary_left, x_boundary_right):
-    #     direction = 0
-    #     if x < x_boundary_left or x > x_boundary_right:
-    #         if angle > 0.1: #turn right
-    #             direction = 3
-
-    #         elif angle < -0.1: #turn left
-    #             direction = 2 
-
-    #     return direction
     
     def move_to_item(self, x, x_boundary_left, x_boundary_right):
         if x >= x_boundary_left or x <= x_boundary_right:

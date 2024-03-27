@@ -43,6 +43,12 @@ class BittlePlannerSubscriber(Node):
         results = self.model([current_frame])  
         
         annotated_frame = results[0].plot()
+        confidence_region = [(0.25, 1), (0.25, 0.5), (0, 0.3), (0.75, 1), (0.75, 0.5), (1, 0.3)]
+        for i in range(len(confidence_region) - 1):
+            cv2.line(annotated_frame, tuple(np.array(confidence_region[i]) * np.array(annotated_frame.shape[:2][::-1])), 
+                     tuple(np.array(confidence_region[i+1]) * np.array(annotated_frame.shape[:2][::-1])), (0, 255, 0), 1)
+        cv2.line(annotated_frame, tuple(np.array(confidence_region[-1]) * np.array(annotated_frame.shape[:2][::-1])), 
+                 tuple(np.array(confidence_region[0]) * np.array(annotated_frame.shape[:2][::-1])), (0, 255, 0), 1)
 
         cv2.imshow("YOLOv8 Detection with bbox", annotated_frame)
         cv2.waitKey(1)
